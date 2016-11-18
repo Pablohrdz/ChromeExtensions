@@ -116,6 +116,33 @@
 							homeTeamStats["Time of Possession"] = parseTimeToSeconds(homeTeamStats, "Time of Possession");
 							visitingTeamStats["Time of Possession"] = parseTimeToSeconds(visitingTeamStats, "Time of Possession");
 
+							//Fumbles Lost
+							homeTeamStats["Fumbles Lost"] = parseSecondValue(homeTeamStats, "Fumbles (Number-Lost)");
+							visitingTeamStats["Fumbles Lost"] = parseSecondValue(visitingTeamStats, "Fumbles (Number-Lost)");
+
+
+							//Field Goals
+							homeTeamStats["Field Goals"] = parseFirstValue(homeTeamStats, "Field Goals (Made-Attempted)");
+							visitingTeamStats["Field Goals"] = parseFirstValue(visitingTeamStats, "Field Goals (Made-Attempted)");
+
+							//Field Goal Efficiency
+							homeTeamStats["Field Goal Efficiency"] = parseMadeAttempted(homeTeamStats, "Field Goals (Made-Attempted)");
+							visitingTeamStats["Field Goal Efficiency"] = parseMadeAttempted(visitingTeamStats, "Field Goals (Made-Attempted)");
+
+
+							//Kickoff Return Yards
+							homeTeamStats["Kickoff Return Yards"] = parseSecondValue(homeTeamStats, "Kickoff Returns (Number-Yards)");
+							visitingTeamStats["Kickoff Return Yards"] = parseSecondValue(visitingTeamStats, "Kickoff Returns (Number-Yards)");
+
+							//Extra Points Made
+							homeTeamStats["Extra Points"] = parseFirstValue(homeTeamStats, "Kicking (Made-Attempted)") + (2 * parseFirstValue(homeTeamStats, "Two Point Conversions (Made-Attempted)"));
+							visitingTeamStats["Extra Points"] = parseFirstValue(visitingTeamStats, "Kicking (Made-Attempted)") + (2 * parseFirstValue(visitingTeamStats, "Two Point Conversions (Made-Attempted)"));
+
+							//Extra Point Efficiency
+							homeTeamStats["Extra Point Efficiency"] = parseMadeAttempted(homeTeamStats, "Extra Points (Made-Attempted)");
+							visitingTeamStats["Extra Point Efficiency"] = parseMadeAttempted(visitingTeamStats, "Extra Points (Made-Attempted)");
+
+
 
 
 							//Pack the data inside a JSON and send it to the server
@@ -221,10 +248,11 @@
 			Goal to Go Efficiency - "x/y - z%" ---- CHECK 
 			Red Zone Efficiency - "x/y - z%" ---- CHECK
 
-			Extra Points (Made-Attempted) - "x - y"	/// CHECK
-			Two-Point conversions (made-attempted) - "x - y"
-			Kicking (made-attempted) - "x - y"
-			Field Goals (made-attempted) - "x - y"
+			Extra Points (Made-Attempted) - "x - y"	--- CHECK
+				Two-Point conversions (made-attempted) - "x - y"
+				Kicking (made-attempted) - "x - y"
+			
+			Field Goals (made-attempted) - "x - y" --- CHECK
 
 			Times Sacked (number - yards) - "x - y"
 			Pass Comp-Att-Int - "x - y - z"
@@ -237,12 +265,10 @@
 
 			Punt Returns (Number - Yards) - "x - y"
 			"Kickoffs (Number-In End Zone-Touchbacks)" - quitar esta mamada
-			Kickoff Returns (number-yards) - "x - y" ///Anadir las yardas al total y quitar esta variable
-			Fumbles (number-lost) - "x - y"
+			Kickoff Returns (number-yards) - "x - y" --- CHECK
+			Fumbles (number-lost) - "x - y"	--- CHECK
 			
 			Time of Possession - "xy:az" ///Pasar a segundos 	--- CHECK
-
-			Index
 			
 
 
