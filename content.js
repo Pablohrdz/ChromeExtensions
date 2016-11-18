@@ -185,15 +185,27 @@
 			return x / y;
 		}
 
+		function parseFirstValue(data, name)
+		{
+			var x = data[name].slice(0, data[name].indexOf("-") - 1).parseInt();
+			return x;
+		}
+
+		function parseSecondValue()
+		{
+			var y = data[name].slice(data[name].indexOf("-") + 1, data[name].length - 1).parseInt();
+			return y;
+		}
+
 		/*
-			Team Name - trim score
-			By Penalty - add zero if empty string
+			Team Name - trim score ---- CHECK
+			By Penalty - add zero if empty string ---- CHECK
 
 
-			Fourth Down Efficiency - floating point value (currently x/y - z%)
-			Third Down Efficiency - fp value
-			Goal to Go Efficiency - "x/y - z%"
-			Red Zone Efficiency - "x/y - z%"
+			Fourth Down Efficiency - floating point value (currently x/y - z%) ---- CHECK
+			Third Down Efficiency - fp value ---- CHECK
+			Goal to Go Efficiency - "x/y - z%" ---- CHECK 
+			Red Zone Efficiency - "x/y - z%" ---- CHECK
 
 			Extra Points (Made-Attempted) - "x - y"
 			Two-Point conversions (made-attempted) - "x - y"
