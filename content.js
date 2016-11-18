@@ -122,26 +122,33 @@
 
 
 							//Field Goals
-							homeTeamStats["Field Goals"] = parseFirstValue(homeTeamStats, "Field Goals (Made-Attempted)");
-							visitingTeamStats["Field Goals"] = parseFirstValue(visitingTeamStats, "Field Goals (Made-Attempted)");
+							homeTeamStats["Net Field Goals"] = parseFirstValue(homeTeamStats, "Field Goals (Made-Attempted)");
+							visitingTeamStats["Net Field Goals"] = parseFirstValue(visitingTeamStats, "Field Goals (Made-Attempted)");
 
 							//Field Goal Efficiency
 							homeTeamStats["Field Goal Efficiency"] = parseMadeAttempted(homeTeamStats, "Field Goals (Made-Attempted)");
 							visitingTeamStats["Field Goal Efficiency"] = parseMadeAttempted(visitingTeamStats, "Field Goals (Made-Attempted)");
 
 
-							//Kickoff Return Yards
-							homeTeamStats["Kickoff Return Yards"] = parseSecondValue(homeTeamStats, "Kickoff Returns (Number-Yards)");
-							visitingTeamStats["Kickoff Return Yards"] = parseSecondValue(visitingTeamStats, "Kickoff Returns (Number-Yards)");
+							//Total Return Yardage = Total Return Yardage (excludes Kickoffs) + Kickoff Return Yards
+							homeTeamStats["Total Return Yardage"] = homeTeamStats["Total Return Yardage (excludes Kickoffs)"] + parseSecondValue(homeTeamStats, "Kickoff Returns (Number-Yards)");
+							visitingTeamStats["Total Return Yardage"] = homeTeamStats["Total Return Yardage (excludes Kickoffs)"] + parseSecondValue(visitingTeamStats, "Kickoff Returns (Number-Yards)");
 
 							//Extra Points Made
-							homeTeamStats["Extra Points"] = parseFirstValue(homeTeamStats, "Kicking (Made-Attempted)") + (2 * parseFirstValue(homeTeamStats, "Two Point Conversions (Made-Attempted)"));
-							visitingTeamStats["Extra Points"] = parseFirstValue(visitingTeamStats, "Kicking (Made-Attempted)") + (2 * parseFirstValue(visitingTeamStats, "Two Point Conversions (Made-Attempted)"));
+							homeTeamStats["Net Extra Points"] = parseFirstValue(homeTeamStats, "Kicking (Made-Attempted)") + (2 * parseFirstValue(homeTeamStats, "Two Point Conversions (Made-Attempted)"));
+							visitingTeamStats["Net Extra Points"] = parseFirstValue(visitingTeamStats, "Kicking (Made-Attempted)") + (2 * parseFirstValue(visitingTeamStats, "Two Point Conversions (Made-Attempted)"));
 
 							//Extra Point Efficiency
 							homeTeamStats["Extra Point Efficiency"] = parseMadeAttempted(homeTeamStats, "Extra Points (Made-Attempted)");
 							visitingTeamStats["Extra Point Efficiency"] = parseMadeAttempted(visitingTeamStats, "Extra Points (Made-Attempted)");
 
+							//Times Sacked
+							homeTeamStats["Times Sacked"] = parseFirstValue(homeTeamStats, "Times Sacked (Number-Yards)");
+							visitingTeamStats["Times Sacked"] = parseFirstValue(visitingTeamStats, "Times Sacked (Number-Yards)");
+
+							//Penalty Yards
+							homeTeamStats["Penalty Yards"] = parseSecondValue(homeTeamStats, "Penalties(Number-Yards)");
+							visitingTeamStats["Penalty Yards"] = parseSecondValue(visitingTeamStats, "Penalties(Number-Yards)");
 
 
 
@@ -249,22 +256,21 @@
 			Red Zone Efficiency - "x/y - z%" ---- CHECK
 
 			Extra Points (Made-Attempted) - "x - y"	--- CHECK
-				Two-Point conversions (made-attempted) - "x - y"
-				Kicking (made-attempted) - "x - y"
+				Two-Point conversions (made-attempted) - "x - y" --- CHECK
+				Kicking (made-attempted) - "x - y" --- CHECK
 			
 			Field Goals (made-attempted) - "x - y" --- CHECK
 
-			Times Sacked (number - yards) - "x - y"
+			Times Sacked (number - yards) - "x - y" --- CHECK
 			Pass Comp-Att-Int - "x - y - z"
-			Punts (number - average) - "x - y"
+			Punts (number - average) - "x - y" 
 			
-			Penalties(number-yards) - "x - y"
+			Penalties(number-yards) - "x - y" --- CHECK
 			
-			Kickoff Returns (number-yards) - "x - y"
-			FGs Blocked - PATs Blocked - "x - y" 
+			FGs Blocked - PATs Blocked - "x - y" -> Descartar
 
-			Punt Returns (Number - Yards) - "x - y"
-			"Kickoffs (Number-In End Zone-Touchbacks)" - quitar esta mamada
+			Punt Returns (Number - Yards) - "x - y" 
+			"Kickoffs (Number-In End Zone-Touchbacks)" -> Descartar
 			Kickoff Returns (number-yards) - "x - y" --- CHECK
 			Fumbles (number-lost) - "x - y"	--- CHECK
 			
