@@ -84,7 +84,35 @@
 							console.log("****************************** Results Home Team ******************************");
 							console.log(homeTeamStats);
 
+							/* Variable name formatting */
 
+							//Team Name
+							visitingTeamStats["Team_Name"] = visitingTeamStats["Team_Name"].slice(0, visitingTeamStats["Team_Name"].indexOf("(") - 1);
+							homeTeamStats["Team_Name"] = homeTeamStats["Team_Name"].slice(0, homeTeamStats["Team_Name"].indexOf("(") - 1);
+
+							//By Penalty
+							if(homeTeamStats["By Penalty"] == "")	homeTeamStats["By Penalty"] = 0;
+							if(visitingTeamStats["By Penalty"] == "")	visitingTeamStats["By Penalty"] = 0;
+
+							//Third Down Efficiency
+							//homeTeamStats["Third Down Efficiency"] = homeTeamStats["Third Down Efficiency"].slice(homeTeamStats["Third Down Efficiency"].indexOf("-") + 1, homeTeamStats["Third Down Efficiency"].length - 2).parseInt();
+							//visitingTeamStats["Third Down Efficiency"] = visitingTeamStats["Third Down Efficiency"].slice(visitingTeamStats["Third Down Efficiency"].indexOf("-") + 1, visitingTeamStats["Third Down Efficiency"].length - 2).parseInt();
+							homeTeamStats["Third Down Efficiency"] = parsePercentage(homeTeamStats, "Third Down Efficiency");
+							visitingTeamStats["Third Down Efficiency"] = parsePercentage(visitingTeamStats, "Third Down Efficiency");
+
+							//Fourth Down Efficiency
+							homeTeamStats["Fourth Down Efficiency"] = parsePercentage(homeTeamStats, "Fourth Down Efficiency");
+							visitingTeamStats["Fourth Down Efficiency"] = parsePercentage(visitingTeamStats, "Fourth Down Efficiency");
+
+							//Goal to Go Efficiency
+							homeTeamStats["Goal to Go Efficiency"] = parsePercentage(homeTeamStats, "Goal to Go Efficiency");
+							visitingTeamStats["Goal to Go Efficiency"] = parsePercentage(visitingTeamStats, "Goal to Go Efficiency");
+
+							//Red Zone Efficiency
+							homeTeamStats["Red Zone Efficiency"] = parsePercentage(homeTeamStats, "Red Zone Efficiency");
+							visitingTeamStats["Red Zone Efficiency"] = parsePercentage(visitingTeamStats, "Red Zone Efficiency");
+
+							//Pack the data inside a JSON and send it to the server
 							var data = {};
 
 							data["home_team"] = homeTeamStats;
@@ -144,29 +172,52 @@
 			}, 3000);
 
 		
+		function parsePercentage(data, name)
+		{
+			return data[name].slice(data[name].indexOf("-") + 1, data[name].length - 2).parseInt() / 100.0;
+		}
+
+		function parseMadeAttempted(data, name)
+		{
+			var x = data[name].slice(0, data[name].indexOf("-") - 1).parseInt();
+			var y = data[name].slice(data[name].indexOf("-") + 1, data[name].length - 1).parseInt();
+
+			return x / y;
+		}
 
 		/*
 			Team Name - trim score
 			By Penalty - add zero if empty string
+
+
 			Fourth Down Efficiency - floating point value (currently x/y - z%)
 			Third Down Efficiency - fp value
+			Goal to Go Efficiency - "x/y - z%"
+			Red Zone Efficiency - "x/y - z%"
+
+			Extra Points (Made-Attempted) - "x - y"
+			Two-Point conversions (made-attempted) - "x - y"
+			Kicking (made-attempted) - "x - y"
+			Field Goals (made-attempted) - "x - y"
+
 			Times Sacked (number - yards) - "x - y"
 			Pass Comp-Att-Int - "x - y - z"
 			Punts (number - average) - "x - y"
-			Extra Points (Made-Attempted) - "x - y"
+			
 			Penalties(number-yards) - "x - y"
-			Red Zone Efficiency - "x/y"
+			
 			Kickoff Returns (number-yards) - "x - y"
-			FGs Blocked - PATs Blocked - "x - y"
+			FGs Blocked - PATs Blocked - "x - y" 
+
 			Punt Returns (Number - Yards) - "x - y"
 			"Kickoffs (Number-In End Zone-Touchbacks)" - quitar esta mamada
 			Kickoff Returns (number-yards) - "x - y" ///Anadir las yardas al total y quitar esta variable
 			Fumbles (number-lost) - "x - y"
-			Two-Point conversions (made-attempted) - "x - y"
-			Kicking (made-attempted) - "x - y"
-			Field Goals (made-attempted) - "x - y"
+			
 			Time of Possession - "xy:az" ///Pasar a segundos
-			Goal to Go Efficiency - "x/y - z%"
+
+			Index
+			
 
 
 		*/
