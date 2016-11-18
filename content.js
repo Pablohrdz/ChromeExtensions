@@ -112,6 +112,12 @@
 							homeTeamStats["Red Zone Efficiency"] = parsePercentage(homeTeamStats, "Red Zone Efficiency");
 							visitingTeamStats["Red Zone Efficiency"] = parsePercentage(visitingTeamStats, "Red Zone Efficiency");
 
+							//Time of Possession
+							homeTeamStats["Time of Possession"] = parseTimeToSeconds(homeTeamStats, "Time of Possession");
+							visitingTeamStats["Time of Possession"] = parseTimeToSeconds(visitingTeamStats, "Time of Possession");
+
+
+
 							//Pack the data inside a JSON and send it to the server
 							var data = {};
 
@@ -197,6 +203,14 @@
 			return y;
 		}
 
+		function parseTimeToSeconds(data, name)
+		{
+			var minutes = data[name].slice(0, data[name].indexOf(":")).parseInt();
+			var seconds = data[name].slice(data[name].indexOf(":") + 1, data[name].length - 1).parseInt();
+
+			return (minutes * 60) + seconds;
+		}
+
 		/*
 			Team Name - trim score ---- CHECK
 			By Penalty - add zero if empty string ---- CHECK
@@ -207,7 +221,7 @@
 			Goal to Go Efficiency - "x/y - z%" ---- CHECK 
 			Red Zone Efficiency - "x/y - z%" ---- CHECK
 
-			Extra Points (Made-Attempted) - "x - y"
+			Extra Points (Made-Attempted) - "x - y"	/// CHECK
 			Two-Point conversions (made-attempted) - "x - y"
 			Kicking (made-attempted) - "x - y"
 			Field Goals (made-attempted) - "x - y"
@@ -226,7 +240,7 @@
 			Kickoff Returns (number-yards) - "x - y" ///Anadir las yardas al total y quitar esta variable
 			Fumbles (number-lost) - "x - y"
 			
-			Time of Possession - "xy:az" ///Pasar a segundos
+			Time of Possession - "xy:az" ///Pasar a segundos 	--- CHECK
 
 			Index
 			
