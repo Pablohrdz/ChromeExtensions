@@ -151,6 +151,18 @@
 							visitingTeamStats["Penalty Yards"] = parseSecondValue(visitingTeamStats, "Penalties(Number-Yards)");
 
 
+							//Interceptions
+							homeTeamStats["Interceptions"] = parseLastValue(homeTeamStats, "Pass Comp-Att-Int"); 
+							visitingTeamStats["Interceptions"] = parseLastValue(visitingTeamStats, "Pass Comp-Att-Int");
+
+							//Passing Efficiency
+							homeTeamStats["Passing Efficiency"] = parseFirstValue(homeTeamStats, "Pass Comp-Att-Int") / parseSecondValue(homeTeamStats, "Pass Comp-Att-Int"); ; 
+							visitingTeamStats["Passing Efficiency"] = parseFirstValue(visitingTeamStats, "Pass Comp-Att-Int") / parseSecondValue(visitingTeamStats, "Pass Comp-Att-Int"); ;
+
+							//Tackled for a Loss (Number-Yards)
+
+
+
 
 							//Pack the data inside a JSON and send it to the server
 							var data = {};
@@ -231,10 +243,26 @@
 			return x;
 		}
 
-		function parseSecondValue()
+		function parseSecondValue(data, name)
 		{
-			var y = data[name].slice(data[name].indexOf("-") + 1, data[name].length - 1).parseInt();
+			var y = -1000;
+
+			if(data[name].indexOf("-") == data[name].lastIndexOf("-"))
+			{
+				 y = data[name].slice(data[name].indexOf("-") + 1, data[name].length - 1).parseInt();
+			}
+			else
+			{
+				y = data[name].slice(data[name].indexOf("-") + 1, data[name].lastIndexOf("-") + 1).parseInt();
+			}
+
 			return y;
+		}
+
+		function parseLastValue(data, name)
+		{
+			var z = data[name].slice(data[name].lastIndexOf("-") + 1, data[name].length - 1).parseInt();
+			return z;
 		}
 
 		function parseTimeToSeconds(data, name)
@@ -262,7 +290,8 @@
 			Field Goals (made-attempted) - "x - y" --- CHECK
 
 			Times Sacked (number - yards) - "x - y" --- CHECK
-			Pass Comp-Att-Int - "x - y - z"
+
+			Pass Comp-Att-Int - "x - y - z" --- CHECK
 			Punts (number - average) - "x - y" 
 			
 			Penalties(number-yards) - "x - y" --- CHECK
@@ -328,7 +357,6 @@ chrome.runtime.onMessage.addListener(
 
 		    		chrome.runtime.sendMessage({"message": "open_new_tab", "url": boxScoreUrl});
 
-		    		//sleep(5000);
 		    	}
 		    	*/
 	    	}
@@ -339,13 +367,3 @@ chrome.runtime.onMessage.addListener(
 	    } 
 	  }
 	);
-
-//Piñado de https://www.sitepoint.com/delay-sleep-pause-wait/
-function sleep(milliseconds) {
-  var start = new Date().getTime();
-  for (var i = 0; i < 1e7; i++) {
-    if ((new Date().getTime() - start) > milliseconds){
-      break;
-    }
-  }
-}
