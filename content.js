@@ -1,12 +1,5 @@
 // content.js
 
-
-//'run_at' : 'document_end'
-//En el "by penalty" usan un blank space en lugar de un 0. Corregir ese pedo.
-
-//$(document).ready(function(){
-	//$(window).on('load', function() {
-
 		//Página Box Score
 
 		var mainInterval = setInterval(function()
